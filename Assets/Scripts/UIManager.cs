@@ -22,4 +22,10 @@ public class UIManager : MonoBehaviour
 #endif
     }
 
+    public void GetPlayerName(string inputText)
+    {
+        DataManager.instance.playerName = inputText;
+        Debug.Log(DataManager.instance.playerName);
+    }
+
 }
