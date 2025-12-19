@@ -8,6 +8,11 @@ using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
+    void Start()
+    {
+
+    }
+    
     public void StartGame()
     {
         SceneManager.LoadScene(1);
@@ -22,9 +27,9 @@ public class UIManager : MonoBehaviour
 #endif
     }
 
-    public void GetPlayerName(string inputText)
+    public void GetPlayerName(string input)
     {
-        DataManager.instance.playerName = inputText;
+        DataManager.instance.playerName = input;
         Debug.Log(DataManager.instance.playerName);
     }
 

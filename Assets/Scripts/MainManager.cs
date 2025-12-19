@@ -16,13 +16,19 @@ public class MainManager : MonoBehaviour
 
     private bool m_Started = false;
     private int m_Points;
-
+    private string m_Name;
     private bool m_GameOver = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // My Alterations
+        m_Name = DataManager.instance.playerName;
+        ShowHighScore();
+        Debug.Log(m_Name + "no outro");
+        // End of my alterations
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
@@ -37,6 +43,7 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+        
     }
 
     private void Update()
@@ -70,7 +77,34 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        // My alterations
+        if (DataManager.instance.playerHighScore < m_Points)
+        {
+            if (DataManager.instance.playerName != m_Name)
+            {
+                DataManager.instance.playerName = m_Name;
+            }
+
+            DataManager.instance.playerHighScore = m_Points;
+            
+            DataManager.instance.SaveName(DataManager.instance.playerName);
+            DataManager.instance.SaveScore();
+        }
+
+        // End of my alterations
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    // My alterations
+
+    public Text BestScoreText;
+
+    private void ShowHighScore()
+    {
+        DataManager.instance.LoadName();
+        DataManager.instance.LoadScore();
+        BestScoreText.text = "High Score: " + DataManager.instance.playerName + " " + DataManager.instance.playerHighScore;
+
     }
 }
